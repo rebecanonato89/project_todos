@@ -1,4 +1,5 @@
 import { User } from "../entities/User";
+import fs from 'fs';
 
 interface itodoDTO {
     id: string,
@@ -44,16 +45,30 @@ class UsersRepository {
 
         this.users.push(user);
 
+        fs.writeFile("db.json", JSON.stringify(this.users), function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("The file was saved!");
+            }
+        });
+
         return user;
     }
 
     search(cpf: string): User | undefined {
 
-        return this.users.find((user: any) => {
+        let users: User[] = [];
+        const data = fs.readFileSync('db.json',
+            { encoding: 'utf8', flag: 'r' });
+
+
+        users = JSON.parse(data);
+
+        return users.find((user: any) => {
             return user.cpf == cpf
         });
     }
-
 
 }
 

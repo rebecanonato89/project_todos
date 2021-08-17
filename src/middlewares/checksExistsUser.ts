@@ -1,4 +1,7 @@
 import { Request, Response, NextFunction } from "express";
+import { UsersRepository } from "../typeorm/repositories/UsersRepository";
+
+const usersRepository = new UsersRepository();
 
 export default function checksExistsUser(
     request: Request, response: Response, next: NextFunction
@@ -11,10 +14,10 @@ export default function checksExistsUser(
             throw new Error('unfilled cpf');
         }
 
-        const auxCpf: string = cpf.toString();
+        const user = usersRepository.search(String(cpf));
 
         request.user = {
-            cpf: auxCpf
+            user
         }
 
         return next();

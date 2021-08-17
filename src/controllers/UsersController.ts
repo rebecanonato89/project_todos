@@ -42,9 +42,7 @@ export default class UsersController {
     }
 
     public async search(request: Request, response: Response) {
-        const { cpf } = request.user;
-
-        const user = usersRepository.search(String(cpf));
+        const { user } = request.user;
 
         if (!user) {
             throw new Error('User not found!');
