@@ -1,18 +1,33 @@
 [
   {
-    "id": "7c7d163f-d53f-4dd9-9a23-8d736888e4bb",
+    "id": "43048a74-f021-44a5-abd3-854f6b2bd0da",
     "name": "Rebeca",
     "email": "rebecanonato@mailinator.com",
     "birthDate": "1989/07/26",
-    "cpf": "68",
+    "cpf": "709",
     "todos": []
   },
   {
-    "id": "fa31e3d4-70d8-4700-9ff1-4b215347f1cf",
+    "id": "c0fbb6a0-55fd-48e1-ba94-b55c206d89a3",
     "name": "Rebeca",
     "email": "rebecanonato@mailinator.com",
     "birthDate": "1989/07/26",
-    "cpf": "70",
+    "cpf": "710",
     "todos": []
+  },
+  {
+    "id": "14303f00-a673-4dc0-b656-5c1b49b15991",
+    "name": "Rebeca",
+    "email": "rebecanonato@mailinator.com",
+    "birthDate": "1989/07/26",
+    "cpf": "708",
+    "todos": [],
+    "address": {
+      "street": "BH",
+      "number": 23,
+      "district": "MG",
+      "city": "MG",
+      "state": "MG"
+    }
   }
 ]

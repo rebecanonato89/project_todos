@@ -9,6 +9,15 @@ interface itodoDTO {
     created_at: any,
 }
 
+interface IUser {
+    user: User,
+    street: string,
+    number: number,
+    district: string,
+    city: string,
+    state: string,
+}
+
 interface iuserDTO {
     name: string,
     birthDate: Date,
@@ -28,7 +37,10 @@ class UsersRepository {
     private users: User[];
 
     constructor() {
-        this.users = [];
+        const data = fs.readFileSync('db.json',
+            { encoding: 'utf8', flag: 'r' });
+
+        this.users = JSON.parse(data);
     }
 
     create({ name, email, birthDate, cpf }: iuserDTO): User {
@@ -57,19 +69,46 @@ class UsersRepository {
     }
 
     search(cpf: string): User | undefined {
-
-        let users: User[] = [];
-        const data = fs.readFileSync('db.json',
-            { encoding: 'utf8', flag: 'r' });
-
-
-        users = JSON.parse(data);
-
-        return users.find((user: any) => {
+        return this.users.find((user: any) => {
             return user.cpf == cpf
         });
     }
 
+    findAll(): User[] {
+        return this.users;
+    }
+
+    update({ user, street, number, district, city, state }: IUser): User {
+
+
+        const index = this.users.findIndex(function (a) {
+            return a.id === user.id;
+        });
+
+        if (index >= 0) {
+            this.users.splice(index, 1);
+        }
+
+        user.address = {
+            street,
+            number,
+            district,
+            city,
+            state
+        };
+
+        this.users.push(user);
+
+        fs.writeFile("db.json", JSON.stringify(this.users), function (err) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("The file was saved!");
+            }
+        });
+
+        return user;
+    }
 }
 
 
