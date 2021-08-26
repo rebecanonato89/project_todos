@@ -1,17 +1,20 @@
 import { Request, Response, NextFunction } from "express";
-import { UsersRepository } from "../typeorm/repositories/UsersRepository";
+import { ObjectShape, OptionalObjectSchema } from "yup/lib/object";
 
-export default function checksUserValidator(
-    request: Request, response: Response, next: NextFunction
-): void {
-    const { name, email, birthDate, cpf } = request.body;
+const checksUserValidator =
+    (requestSchema: OptionalObjectSchema<ObjectShape>) =>
+        async (request: Request, response: Response, next: NextFunction) => {
+            const { name, email, birthDate, cpf } = request.body;
 
-    try {
+            try {
+                await requestSchema.validate({
+                    name, email, birthDate, cpf
 
+                });
+                next();
+            } catch (error) {
+                throw new Error(error);
+            }
+        }
 
-
-        return next();
-    } catch {
-        throw new Error('bad request');
-    }
-}
+export default checksUserValidator;
